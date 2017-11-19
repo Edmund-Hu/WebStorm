@@ -1,0 +1,488 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>青岛分行国内结算客户费率优惠审批意见表</title>
+    <link rel="stylesheet" type="text/css" href="js/jquery/jquery-easyui/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="js/jquery/jquery-easyui/icon.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <script type="text/javascript" src="js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery-easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery-easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="js/santai.core.js"></script>
+    <script type="text/javascript" src="js/common/common.js"></script>
+
+</head>
+<script>
+
+    $(function(){
+        if($("#info").html()=='true'){
+            alert("操作成功！");
+        }
+
+    });
+
+    $.extend($.fn.textbox.defaults.rules,{
+        number: {
+            validator: function (value, param) {
+                return /^[0-9]+\.?[0-9]*$/.test(value);
+            },
+            message: '输入只能为数字'
+        }
+    });
+
+    $.extend($.fn.datebox.defaults.rules,{
+        today: {
+            validator: function (value, param) {
+                //	console.log(value);
+                return new Date()-new Date(value)>0;
+            },
+            message: '输入的日期不能晚于今天'
+        }
+    });
+    $.extend($.fn.datebox.defaults.rules,{
+        format: {
+            validator: function (value, param) {
+                //	console.log(value);
+                return /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value);
+            },
+            message: '输入的日期格式应为yyyy-mm-dd'
+        }
+    });
+</script>
+
+<body>
+<div class="easyui-panel" title="青岛分行国内结算客户费率优惠审批意见表" iconCls="ico_280" style="width: 100%;" data-options="fit:true">
+    <div class="business_title10">我已仔细阅读以下协议，同意协议中的有关条款，充分了解银行和自身的权利和义务。</div>
+    <div  style="height: 60px;">
+        <div class="business_title">协议：</div>
+        <div id="protocol" class="business_input10" style="padding-top: 4px;font-size: 18px;">
+            <label style="width: 210px"><input id="P1" type="checkbox" checked="checked" disabled="disabled" value="P1" />
+                <a href="" target="_blank" style="color:blue;">人民币单位银行结算账户管理协议</a>
+            </label>
+            <label style="width: 210px"><input id="P2" type="checkbox" checked="checked" disabled="disabled" value="P2" />
+                <a href="" target="_blank" style="color:blue;">银企对账服务协议</a>
+            </label>
+            <label style="width: 210px"><input id="P3" type="checkbox" checked="checked" disabled="disabled" value="P3" />
+                <a href="" target="_blank" style="color:blue;">网上银行企业客户服务协议</a>
+            </label><br />
+            <label style="width: 210px"><input id="P4" type="checkbox" value="P4" />
+                <a href="" target="_blank" style="color:blue;">支付密码器(中国银行使用通用性支付密码器信息表、支付密码器使用协议)</a>
+            </label>
+            <label style="width: 210px"><input id="P5" type="checkbox" checked="checked" disabled="disabled" value="P5" />
+                <a href="" target="_blank" style="color:blue;">银行结算证(银行结算证申请表、结算证使用协议)</a>
+            </label>
+        </div>
+    </div>
+
+    <div class="business_ss-dm">
+
+        <div class="business_title2">存款人名称：</div>
+        <div class="business_input8">
+            <input id="depositorName" class="easyui-textbox" style="width:100%;height:24px" data-options="required:true,validType:'maxLength[60]'" value=""/>
+        </div>
+        <div class="business_title2">存款人英文名称：</div>
+        <div class="business_input8">
+            <input id="accountEnName" class="easyui-textbox" style="width:100%;height:24px" data-options="validType:'maxLength[60]'" value=''/>
+        </div>
+    </div>
+    <div class="business_ss-dm">
+        <div class="business_title2">证明文件种类：</div>
+        <div class="business_input8">
+            <input class="easyui-combobox" id="fileType" name="fileType" style="width:100%;height:24px" url='getTypeEnum.action?typeCode=FILE_TYPE'
+                   data-options="required:true,editable:false,valueField:'typeValue', textField:'typeName'" value='' />
+        </div>
+        <div class="business_title2">证明文件编号：</div>
+        <div class="business_input8">
+            <input id="fileNumber" class="easyui-textbox" style="width:100%;height:24px" data-options="required:true,validType:['englishCheckSub','maxLength[60]']" value=''/>
+        </div>
+        <div class="business_title2">证明文件到期日：</div>
+        <div class="business_input12">
+            <input id="fileEndDate" type="text" class="easyui-datebox"  style="width:100%;" data-options="required:true,validType:'date'"/>
+        </div>
+    </div>
+
+        <div class="business_ss-dm">
+            <div class="business_title4">统一社会信用代码证件号码：</div>
+            <div class="business_input8">
+                <input id="clientInfo.idNoCredit" class="easyui-textbox idNoCredit"  style="width:100%;height:24px" value='' data-options="validType:['englishCheckSub','maxLength[30]']"/>
+            </div>
+            <div class="business_title4">统一社会信用代码证件到期日：</div>
+            <div class="business_input8">
+                <input id="clientInfo.endDateCredit" class="easyui-datebox endDateCredit" value='' style="width:100%;" data-options="validType:'date'"/>
+            </div>
+        </div>
+        <div class="business_ss-dm">
+            <div class="business_title4">组织机构代码证件号码：</div>
+            <div class="business_input8">
+                <input id="orgInstitCd" class="easyui-textbox" style="width:100%;height:24px" value='' data-options="required:true,validType:['englishCheckSub','length[9]']"/>
+            </div>
+            <div class="business_title4">组织机构代码证件到期日：</div>
+            <div class="business_input8">
+                <input id="orgInstitEndDate" class="easyui-datebox" value='' style="width:100%;" data-options="required:true,validType:'date'"/>
+            </div>
+        </div>
+        <div class="business_ss-dm">
+            <div class="business_title4">营业执照证件号码：</div>
+            <div class="business_input8">
+                <input id="clientInfo.idNoLicense" class="easyui-textbox idNoLicense"  style="width:100%;height:24px" value='' data-options="validType:['englishCheckSub','maxLength[30]']"/>
+            </div>
+            <div class="business_title4">营业执照证件到期日：</div>
+            <div class="business_input8">
+                <input id="clientInfo.endDateLicense" class="easyui-datebox endDateLicense" value='' style="width:100%;" data-options="validType:'date'"/>
+            </div>
+        </div>
+        <div class="business_ss-dm">
+            <div class="business_title4">税务登记证（国）证件号码：</div>
+            <div class="business_input8">
+                <input id="countryTax" class="easyui-textbox"  style="width:100%;height:24px" value='' data-options="validType:['englishCheckSub','maxLength[30]']"/>
+            </div>
+            <div class="business_title4">税务登记证（国）证件到期日：</div>
+            <div class="business_input8">
+                <input id="clientInfo.endDateCountry" class="easyui-datebox endDateCountry" value='' style="width:100%;" data-options="validType:'date'"/>
+            </div>
+        </div>
+        <div class="business_ss-dm">
+            <div class="business_title4">税务登记证（地）证件号码：</div>
+            <div class="business_input8">
+                <input id="areaTax" class="easyui-textbox"  style="width:100%;height:24px" value='' data-options="validType:['englishCheckSub','maxLength[30]']"/>
+            </div>
+            <div class="business_title4">税务登记证（地）证件到期日：</div>
+            <div class="business_input8">
+                <input id="clientInfo.endDateTax" class="easyui-datebox endDateTax" value='' style="width:100%;" data-options="validType:'date'"/>
+            </div>
+        </div>
+
+    <div class="business_ss-dm" style="height: 60px;">
+        <div class="business_title2">经营范围：</div>
+        <div class="business_input10">
+            <input id="busiScope" class="easyui-textbox" value='' data-options="required:true,multiline:true" style="width:100%;height:50px" />
+        </div>
+    </div>
+    <div class="business_title2">注册地址：</div>
+    <div class="business_ss-dm1">
+        <div class="business_title2">国家：</div>
+        <div class="business_input8">
+            <input id="registAddressG" class="easyui-textbox"  style="width:100%;height:24px" data-options="required:true,validType:'maxLength[15]'"/>
+        </div>
+        <div class="business_title2">省/自治区/直辖市：</div>
+        <div class="business_input8">
+            <input id="registAddressS" class="easyui-textbox"  style="width:100%;height:24px" data-options="required:true,validType:'maxLength[15]'"/>
+        </div>
+        <div class="business_title2">市/区：</div>
+        <div class="business_input8">
+            <input id="registAddressQ" class="easyui-textbox"  style="width:100%;height:24px" data-options="required:true,validType:'maxLength[15]'"/>
+        </div>
+    </div>
+    <div class="business_ss-dm">
+        <div class="business_title2">地址：</div>
+        <div class="business_input9">
+            <input id="registAddressD" class="easyui-textbox"  style="width:100%;height:24px" data-options="required:true,validType:'maxLength[50]'"/>
+        </div>
+        <div class="business_title2">邮编：</div>
+        <div class="business_input12">
+            <input id="postCode" class="easyui-textbox" style="width:100%;height:24px" value='' data-options="required:true,validType:['number','length[6]']"/>
+        </div>
+    </div>
+    <div class="business_title2">通讯地址：</div>
+    <div class="business_ss-dm1">
+        <div class="business_title2">国家：</div>
+        <div class="business_input8">
+            <input id="officeAddressG" class="easyui-textbox" style="width:100%;height:24px" data-options="required:true,validType:'maxLength[15]'"/>
+        </div>
+        <div class="business_title2">省/自治区/直辖市：</div>
+        <div class="business_input8">
+            <input id="officeAddressS" class="easyui-textbox"  style="width:100%;height:24px" data-options="required:true,validType:'maxLength[15]'"/>
+        </div>
+        <div class="business_title2">市/区：</div>
+        <div class="business_input8">
+            <input id="officeAddressQ" class="easyui-textbox"  style="width:100%;height:24px" data-options="required:true,validType:'maxLength[15]'"/>
+        </div>
+    </div>
+    <div class="business_ss-dm">
+        <div class="business_title2">地址：</div>
+        <div class="business_input9">
+            <input id="officeAddressD" class="easyui-textbox"  style="width:100%;height:24px" data-options="required:true,validType:'maxLength[50]'"/>
+        </div>
+        <div class="business_title2">邮编：</div>
+        <div class="business_input12">
+            <input id="postCodeNews" class="easyui-textbox" style="width:100%;height:24px" value='<s:property value="postCodeNews"/>' data-options="required:true,validType:['number','length[6]']"/>
+        </div>
+        <div class="business_input12">
+            <a href="#" class="easyui-linkbutton" style="width:120px;height:24px;padding-left:10px;" onclick="setOfficeAddress();">设置为注册地址</a>
+        </div>
+    </div>
+    <div class="business_ss-dm">
+        <div class="business_title2">是否标明注册资金：</div>
+        <div class="business_input8">
+            <select id="nofundflag" class="easyui-combobox" style="width:100%;" data-options="required:true,panelHeight:'auto',editable:false">
+                <option value="false" selected='selected'>标明</option>
+                <option value="true" <s:if test='nofundflag=="true"'>selected='selected'</s:if>>未标明</option>
+            </select>
+        </div>
+        <div class="business_title2">注册资金(元)：</div>
+        <div class="business_input8">
+            <input id="registMoney" class="easyui-textbox" value='' style="width:100%;height:24px" data-options="validType:['maxLength[18]','money[13,2]']"/>
+        </div>
+        <div class="business_title2">注册货币：</div>
+        <div class="business_input8">
+            <input class="easyui-combobox" id="registMoneyType" name="registMoneyType"  value=''style="width:100%;height:24px" url='getTypeEnum.action?typeCode=REGIST_MONEY_TYPE'
+                   data-options="editable:false,valueField:'typeValue', textField:'typeName',validType:'maxLength[60]'"  >
+        </div>
+    </div>
+    <div class="business_ss-dm">
+        <div class="business_title2">注册日期：</div>
+        <div class="business_input8">
+            <input id="registDate" class="easyui-datebox" style="width:100%;height:24px" value='' data-options="required:true,validType:'date'"/>
+        </div>
+        <div class="business_title2">地区代码：</div>
+        <div class="business_input8">
+            <input id="areaCode" class="easyui-textbox" style="width:100%;height:24px" value='' data-options="required:true,validType:['englishCheckSub','length[6]']"/>
+        </div>
+        <div class="business_title2">传真号码：</div>
+        <div class="business_input8">
+            <input id="faxCode" class="easyui-textbox" style="width:100%;height:24px" value='' data-options="validType:['englishCheckSub','maxLength[60]']"/>
+        </div>
+    </div>
+    <div class="business_ss-dm">
+        <div class="business_title2">办公电话：</div>
+        <div class="business_input8">
+            <input id="mobileCode" class="easyui-textbox" style="width:100%;height:24px" value='' data-options="required:true,validType:'maxLength[13]'"/>
+        </div>
+        <div class="business_title2">电子邮件地址：</div>
+        <div class="business_input8">
+            <input id="email" class="easyui-textbox" style="width:100%;height:24px" value='' data-options="validType:'email'"/>
+        </div>
+    </div>
+    <div class="business_ss-dm">
+        <div class="business_title2">存款人类别：</div>
+        <div class="business_input8">
+            <input class="easyui-combobox" id="peopleType" name="peopleType"  value=''style="width:100%;height:24px" url='getTypeEnum.action?typeCode=PROPOSER_TYPE'
+                   data-options="required:true,editable:false,valueField:'typeValue', textField:'typeName',validType:'maxLength[60]'"  />
+        </div>
+        <div class="business_title2">行业分类：</div>
+        <div class="business_input8">
+
+            <input class="easyui-combobox" id="accountCategory" name="accountCategory"  value='' style="width:100%;height:24px" url='getTypeEnum.action?typeCode=CATEGORY'
+                   data-options="required:true,editable:false,valueField:'typeValue', textField:'typeName',validType:'maxLength[60]'"  />
+        </div>
+        <div class="business_title2">企业类型：</div>
+        <div class="business_input8">
+
+            <input class="easyui-combobox" id="companyType" name="companyType"  value='' style="width:100%;height:24px" url='getTypeEnum.action?typeCode=COMPANY_TYPE'
+                   data-options="required:true,editable:false,valueField:'typeValue', textField:'typeName',validType:'maxLength[60]'"  />
+        </div>
+    </div>
+
+
+
+    <div style="clear: both;"></div>
+    <div id="stepBtn" class="role_window_button" style="margin-top:30px;">
+        <div class="role_window">
+            <a id="preStep" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-091'"
+               style="padding:3px 0px;width:20%; margin-right:10px;" onclick="preStep()">
+                <span style="font-size:14px;">上一步</span>
+            </a>
+            <a href="javascript:void(0)" name="saveBtn" class="easyui-linkbutton" data-options="iconCls:'icon-save'"
+               style="padding:3px 0px;width:20%; margin-right:10px;" onclick="saveBook(0)">
+                <span style="font-size:14px;">暂存</span>
+            </a>
+            <a id="nextStep" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-101'"
+               style="padding:3px 0px;width:20%; margin-right:10px;" onclick="nextStep()">
+                <span style="font-size:14px;">下一步</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script>
+    //表单重置函数；
+    var flag = true;
+    function reset(){
+
+        $("#reduceForm1").form('reset');
+    }
+
+    function formSubmit(){
+        if(!$("#applyOrgName").textbox('isValid')){
+            $("#applyOrgName").next('span').find('input').focus();;
+            return false;
+        }
+        if(!$("#openDate").datebox('isValid')){
+            $("#openDate").next('span').find('input').focus();;
+            return false;
+        }
+        if(!$("#PAValue").datebox('isValid')){
+            $("#PAValue").next('span').find('input').focus();;
+            return false;
+        }
+        if(!$("#accountDaliyBalance").datebox('isValid')){
+            $("#accountDaliyBalance").next('span').find('input').focus();;
+            return false;
+        }
+        if(!$("#reduceStartDate").datebox('isValid')){
+            $("#reduceStartDate").next('span').find('input').focus();;
+            return false;
+        }
+        if(!$("#reduceEndDate").datebox('isValid')){
+            $("#reduceEndDate").next('span').find('input').focus();;
+            return false;
+        }
+
+        /* 	var isValid = $(this).form('validate');
+         if(!isValid){
+         alert("表单验证未通过，无法提交！请检查输入项是否符合要求");
+         return false;
+         } */
+        $("#reduceForm1").get(0).submit();
+    }
+    function formSave(){
+        var flag = false;
+        $("input:text").each(function(){
+            if($(this).val().trim()!=""&&$(this).val().trim()!="请选择"){
+                flag = true;
+                //alert($(this).val().trim());
+            }
+        });
+
+        $("#reduceForm1").get(0).action="insertCusForm.action?save=yes";
+        if(flag){
+
+            $("#reduceForm1").get(0).submit();
+
+        }else{
+            alert("您没有输入内容，无法保存！")
+        }
+
+    }
+    $(function(){
+        //动态改变优网银惠幅度的选项
+        $("#netReduceType").combobox({
+            onSelect:function(a){
+                console.log(a);
+                if(a.text=="企业网银划费及手续费"){
+                    console.log(true);
+                    var optionData, json;
+                    json='[{"id":"0","text":"全免"},' +
+                            '{"id":"1","text":"一折"},' +
+                            '{"id":"2","text":"两折"},' +
+                            '{"id":"3","text":"三折"},' +
+                            '{"id":"4","text":"四折"},' +
+                            '{"id":"5","text":"五折"},' +
+                            '{"id":"55","text":"五五折"},' +
+                            '{"id":"6","text":"六折"},' +
+                            '{"id":"65","text":"六五折"},' +
+                            '{"id":"7","text":"七折"},' +
+                            '{"id":"75","text":"七五折"},' +
+                            '{"id":"8","text":"八折"},' +
+                            '{"id":"85","text":"八五折"},' +
+                            '{"id":"9","text":"九折"},' +
+                            '{"id":"95","text":"九五折"}]';
+                    optionData= $.parseJSON(json);
+                    $("#netReduceRange").combobox({
+                        valueField:'id',
+                        textField:'text'
+                    });
+                    $("#netReduceRange").combobox("loadData", optionData);
+                }else{
+                    $("#netReduceRange").combobox({
+                        valueField:'id',
+                        textField:'text'
+                    });
+                }
+            }
+
+        });
+//动态改变优惠幅度选项
+
+        $("#reduceType").combobox({
+            onSelect:function(a){
+                console.log(a);
+                if(a.text=="对公短信通"){
+                    console.log(true);
+                    var optionData, json;
+                    json='[{"id":"10","text":"免费3个月"},' +
+                            '{"id":"11","text":"免费6个月"},' +
+                            '{"id":"12","text":"免费9个月"},' +
+                            '{"id":"0","text":"全免"}]';
+                    optionData= $.parseJSON(json);
+                    $("#reduceRange").combobox({
+                        valueField:'id',
+                        textField:'text'
+                    });
+                    $("#reduceRange").combobox("loadData", optionData);
+                }else{
+                    $("#reduceRange").combobox({
+                        valueField:'id',
+                        textField:'text'
+                    });
+                }
+            }
+
+        })
+
+
+
+        $("#reduceEndDate").datebox({
+            onSelect:function(data2){
+                var date = $("#reduceStartDate").next("span").find("input:hidden").val();
+                var D1 = new Date(date);
+
+                if((data2-D1)/1000>365*24*3600){
+                    alert("最长优惠时间不能超过一年");
+                    flag=false;
+
+                    $("#reduceEndDate").next("span").find("input").focus();
+                    $("#reduceEndDate").next("span").find("input").val("");
+
+                }else if((data2-D1)<=0){
+                    alert("优惠结束时间不能早于开始时间");
+                    flag=false;
+                    $("#reduceEndDate").next("span").find("input").focus();
+                    $("#reduceEndDate").next("span").find("input").val("");
+
+                }else{
+                    flag=true;
+                }
+            }
+
+        })
+
+
+        $("#reduceStartDate").datebox({
+            onSelect:function(date1){
+                var date = $("#reduceEndDate").next("span").find("input:hidden").val();
+                if(date!=""){
+                    var D2 = new Date(date);
+                    if((D2-date1)/1000>365*24*3600){
+                        alert("最长优惠时间不能超过一年");
+                        flag=false;
+
+                        $("#reduceStartDate").next("span").find("input").focus();
+                        $("#reduceStartDate").next("span").find("input").val("");
+                    }else if((D2-date1)<=0){
+                        alert("优惠结束时间不能早于开始时间");
+                        flag=false;
+                        $("#reduceStartDate").next("span").find("input").focus();
+                        $("#reduceStartDate").next("span").find("input").val("");
+
+                    }else{
+                        flag=true;
+                    }
+
+                }
+            }
+
+        });
+
+
+    });
+
+
+
+
+</script>
+</html>
